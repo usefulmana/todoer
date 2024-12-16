@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: todoer
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/dev
+    username: dev
+    password: passw0rd
+    jpa:
+      show-sql: true
+
+  flyway:
+    enabled: true
+    validate-on-migrate: true
+    baseline-on-migrate: true
+    baseline-version: 0
