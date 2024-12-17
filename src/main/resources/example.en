@@ -1,0 +1,12 @@
+
+# Rename this file to .env.dev or .env.prod depending on your use case
+# Database
+DB_URL=jdbc:postgresql://localhost:5432/tododb
+DB_USERNAME=your_username
+DB_PASSWORD=your_password
+
+# Firebase
+FIREBASE_CREDENTIALS_PATH=path/to/firebase/credentials.json
+
+# Server
+SERVER_PORT=8080

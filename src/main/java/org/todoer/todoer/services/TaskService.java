@@ -87,4 +87,13 @@ public class TaskService {
 
         return taskMapper.toResponse(taskRepository.save(task));
     }
+
+    public void deleteTask(Long taskId) {
+        taskRepository.deleteById(taskId);
+    }
+
+    public Page<TaskResponse> findTasks(Specification<Task> spec, Pageable pageable) {
+        return taskRepository.findAll(spec, pageable)
+                .map(taskMapper::toResponse);
+    }
 }

@@ -11,5 +11,7 @@ public class Constants {
     public static final String USER_PROJECTS_CACHE = "userProjectsCache";
     public static final String PROJECT_TAGS_CACHE = "projectTagsCache";
 
-
+    // Headers
+    public static final String X_USER_ID = "X-User-Id";
+    public static final String X_PROJECT_ID = "X-Project-Id";
 }

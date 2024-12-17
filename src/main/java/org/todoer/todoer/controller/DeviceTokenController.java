@@ -10,6 +10,7 @@ import org.todoer.todoer.entities.User;
 import org.todoer.todoer.exceptions.ResourceNotFoundException;
 import org.todoer.todoer.repositories.DeviceTokenRepository;
 import org.todoer.todoer.repositories.UserRepository;
+import org.todoer.todoer.util.Constants;
 
 @RestController
 @RequiredArgsConstructor
@@ -21,7 +22,7 @@ public class DeviceTokenController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public void registerToken(
-            @RequestHeader("X-User-Id") Long userId,
+            @RequestHeader(Constants.X_USER_ID) Long userId,
             @Valid @RequestBody DeviceTokenRequest request) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found"));

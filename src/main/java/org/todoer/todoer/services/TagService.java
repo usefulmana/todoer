@@ -13,6 +13,7 @@ import org.todoer.todoer.exceptions.ResourceNotFoundException;
 import org.todoer.todoer.mapper.TagMapper;
 import org.todoer.todoer.repositories.ProjectRepository;
 import org.todoer.todoer.repositories.TagRepository;
+import org.todoer.todoer.repositories.TaskRepository;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -24,6 +25,7 @@ public class TagService {
     private final TagRepository tagRepository;
     private final ProjectRepository projectRepository;
     private final TagMapper tagMapper;
+    private final TaskRepository taskRepository;
 
     public TagResponse createTag(TagCreateRequest request) {
         if (tagRepository.existsByNameAndProjectId(request.getName(), request.getProjectId())) {
@@ -52,5 +54,9 @@ public class TagService {
         tagMapper.updateEntity(tag, request);
 
         return tagMapper.toResponse(tagRepository.save(tag));
+    }
+
+    public void deleteTag(Long tagId) {
+        taskRepository.deleteById(tagId);
     }
 }

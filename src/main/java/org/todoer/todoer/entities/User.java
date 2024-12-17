@@ -27,7 +27,7 @@ public class User {
     @Column(unique = true)
     private String username;
 
-    @Column(nullable = false)
+    @Column(name = "password_hash", nullable = false)
     private String hashedPassword;
 
     private AuditMetadata auditMetadata;

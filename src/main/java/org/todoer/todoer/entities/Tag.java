@@ -5,7 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
+import java.time.ZonedDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -32,7 +34,9 @@ public class Tag {
     @JoinColumn(name = "project_id", nullable = false)
     private Project project;
 
-    private AuditMetadata auditMetadata;
+    @CreationTimestamp
+    @Column(name = "created_at", nullable = false)
+    private ZonedDateTime createdAt;
 
     @ManyToMany(mappedBy = "tags")
     @Builder.Default

@@ -2,6 +2,7 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '3.4.0'
     id 'io.spring.dependency-management' version '1.1.6'
+    id 'org.springdoc.openapi-gradle-plugin' version '1.9.0'
 }
 
 group = 'org.todoer'
@@ -37,6 +38,7 @@ dependencies {
     implementation 'io.github.resilience4j:resilience4j-retry:2.1.0'
     implementation 'io.github.resilience4j:resilience4j-ratelimiter:2.1.0'
     implementation 'io.github.resilience4j:resilience4j-circuitbreaker:2.1.0'
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.7.0'
     compileOnly 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     runtimeOnly 'org.postgresql:postgresql'
@@ -49,4 +51,40 @@ dependencies {
 
 tasks.named('test') {
     useJUnitPlatform()
+}
+
+// Add at the end of your build.gradle
+bootRun {
+    systemProperties = System.properties
+
+    doFirst {
+        def profile = project.hasProperty('profile') ? project.property('profile') : 'dev'
+        def envFile = file("src/main/resources/.env.${profile}")
+
+        if (envFile.exists()) {
+            println "Loading environment from: ${envFile.path}"
+            Properties props = new Properties()
+            envFile.withInputStream { props.load(it) }
+
+            // Set system properties for Spring Boot
+            props.each { key, value ->
+                systemProperty key, value
+            }
+            // Set active profile
+            systemProperty 'spring.profiles.active', profile
+        } else {
+            throw new GradleException("Environment file not found: ${envFile.path}")
+        }
+    }
+}
+
+tasks.register('bootRunEnv') {
+    group = 'application'
+    description = 'Runs the application with specified profile'
+
+    doFirst {
+        println "Starting application with Spring Boot..."
+    }
+
+    finalizedBy bootRun
 }

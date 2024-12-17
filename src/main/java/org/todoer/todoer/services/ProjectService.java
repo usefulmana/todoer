@@ -58,4 +58,10 @@ public class ProjectService {
 
         projectRepository.delete(project);
     }
+
+    public ProjectResponse getProjectById(Long id) {
+        Project project = projectRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Project not found"));
+        return projectMapper.toResponse(project);
+    }
 }

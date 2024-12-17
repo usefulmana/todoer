@@ -21,6 +21,9 @@ public class ProjectResponse {
     private boolean isDeletable;
     private ZonedDateTime createdAt;
     private ZonedDateTime updatedAt;
+
+    @Builder.Default
     private Set<TaskSummaryResponse> tasks = new HashSet<>();
+    @Builder.Default
     private Set<TagResponse> tags = new HashSet<>();
 }
