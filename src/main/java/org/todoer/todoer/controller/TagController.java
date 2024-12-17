@@ -8,11 +8,12 @@ import org.todoer.todoer.dto.request.TagCreateRequest;
 import org.todoer.todoer.dto.request.TagUpdateRequest;
 import org.todoer.todoer.dto.response.TagResponse;
 import org.todoer.todoer.services.TagService;
+import org.todoer.todoer.util.Constants;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/projects/{projectId}/tags")
+@RequestMapping("/api/v1/tags")
 @RequiredArgsConstructor
 public class TagController {
     private final TagService tagService;
@@ -20,14 +21,14 @@ public class TagController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public TagResponse createTag(
-            @PathVariable Long projectId,
+            @RequestHeader(Constants.X_PROJECT_ID) Long projectId,
             @Valid @RequestBody TagCreateRequest request) {
         request.setProjectId(projectId);
         return tagService.createTag(request);
     }
 
     @GetMapping
-    public List<TagResponse> getProjectTags(@PathVariable Long projectId) {
+    public List<TagResponse> getProjectTags(@RequestHeader(Constants.X_PROJECT_ID) Long projectId) {
         return tagService.getProjectTags(projectId);
     }
 

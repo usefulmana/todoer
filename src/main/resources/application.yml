@@ -8,6 +8,10 @@ spring:
     hibernate:
       ddl-auto: validate
 
+jwt:
+  secret: ${JWT_SECRET}
+  expiration: 604800000
+
 firebase:
   credentials-path: ${FIREBASE_CREDENTIALS_PATH}
 
@@ -19,6 +23,7 @@ logging:
     name: application.log
 
 ---
+# Dev Configuration
 spring:
   config:
     activate:
@@ -28,7 +33,10 @@ spring:
     properties:
       hibernate:
         format_sql: true
-
+  security:
+    user:
+      name: demoer
+      password: 123456
 logging:
   level:
     com.example.todo: DEBUG

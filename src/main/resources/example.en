@@ -10,3 +10,5 @@ FIREBASE_CREDENTIALS_PATH=path/to/firebase/credentials.json
 
 # Server
 SERVER_PORT=8080
+
+JWT_SECRET=your-secure-production-salt

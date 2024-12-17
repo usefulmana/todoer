@@ -4,6 +4,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.todoer.todoer.dto.request.UserRegistrationRequest;
 import org.todoer.todoer.dto.request.UserUpdateRequest;
@@ -31,6 +32,7 @@ public class UserService {
     private final ProjectMapper projectMapper;
     private final TaskMapper taskMapper;
     private final TaskRepository taskRepository;
+    private final PasswordEncoder passwordEncoder;
 
     public UserResponse createUser(UserRegistrationRequest request) {
         if (userRepository.existsByEmail(request.getEmail())) {
@@ -41,6 +43,8 @@ public class UserService {
         }
 
         User user = userMapper.toEntity(request);
+        user.setHashedPassword(passwordEncoder.encode(request.getPassword()));
+
         return userMapper.toResponse(userRepository.save(user));
     }
 
@@ -79,4 +83,5 @@ public class UserService {
         return taskRepository.findByAssignedToId(userId, pageable)
                 .map(taskMapper::toResponse);
     }
+
 }
